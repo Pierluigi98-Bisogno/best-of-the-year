@@ -61,10 +61,18 @@
     <div class="container">
         <h1>🎬 Best Movies of the Year</h1>
         
+        <div style="background-color: #e3f2fd; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: #1976d2;">📝 Lista Titoli:</h3>
+            <p th:text="${movieTitles}" style="font-style: italic; color: #333;">Titoli dei film</p>
+        </div>
+        
         <ul class="movie-list">
             <li class="movie-item" th:each="movie : ${movies}">
                 <span class="movie-id" th:text="${movie.id}">ID</span>
-                <span class="movie-title" th:text="${movie.title}">Titolo Film</span>
+                <span class="movie-title">
+                    <a th:href="@{/movies/{id}(id=${movie.id})}" th:text="${movie.title}" 
+                       style="text-decoration: none; color: #007bff;">Titolo Film</a>
+                </span>
             </li>
         </ul>
         

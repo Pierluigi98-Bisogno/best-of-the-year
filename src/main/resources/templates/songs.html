@@ -61,10 +61,18 @@
     <div class="container">
         <h1>🎵 Best Songs of the Year</h1>
         
+        <div style="background-color: #e8f5e8; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <h3 style="margin-top: 0; color: #2e7d32;">📝 Lista Titoli:</h3>
+            <p th:text="${songTitles}" style="font-style: italic; color: #333;">Titoli delle canzoni</p>
+        </div>
+        
         <ul class="song-list">
             <li class="song-item" th:each="song : ${songs}">
                 <span class="song-id" th:text="${song.id}">ID</span>
-                <span class="song-title" th:text="${song.title}">Titolo Canzone</span>
+                <span class="song-title">
+                    <a th:href="@{/songs/{id}(id=${song.id})}" th:text="${song.title}" 
+                       style="text-decoration: none; color: #28a745;">Titolo Canzone</a>
+                </span>
             </li>
         </ul>
         

@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.example.bestoftheyear.model.Movie;
 import com.example.bestoftheyear.model.Song;
@@ -24,6 +25,14 @@ public class HomeController {
 	public String movies(Model model) {
 		List<Movie> movies = getBestMovies();
 		model.addAttribute("movies", movies);
+		
+		// Aggiungo lista titoli separati da virgole
+		String movieTitles = movies.stream()
+				.map(Movie::getTitle)
+				.reduce((title1, title2) -> title1 + ", " + title2)
+				.orElse("");
+		model.addAttribute("movieTitles", movieTitles);
+		
 		return "movies";
 	}
 
@@ -31,6 +40,14 @@ public class HomeController {
 	public String songs(Model model) {
 		List<Song> songs = getBestSongs();
 		model.addAttribute("songs", songs);
+		
+		// Aggiungo lista titoli separati da virgole
+		String songTitles = songs.stream()
+				.map(Song::getTitle)
+				.reduce((title1, title2) -> title1 + ", " + title2)
+				.orElse("");
+		model.addAttribute("songTitles", songTitles);
+		
 		return "songs";
 	}
 
@@ -53,5 +70,39 @@ public class HomeController {
 		songs.add(new Song(4, "Imagine - John Lennon"));
 		songs.add(new Song(5, "Sweet Child O' Mine - Guns N' Roses"));
 		return songs;
+	}
+	
+	@GetMapping("/movies/{id}")
+	public String movieById(@PathVariable int id, Model model) {
+		List<Movie> movies = getBestMovies();
+		Movie movie = movies.stream()
+				.filter(m -> m.getId() == id)
+				.findFirst()
+				.orElse(null);
+		
+		if (movie != null) {
+			model.addAttribute("movie", movie);
+			return "movie-detail";
+		} else {
+			model.addAttribute("error", "Film non trovato");
+			return "error";
+		}
+	}
+	
+	@GetMapping("/songs/{id}")
+	public String songById(@PathVariable int id, Model model) {
+		List<Song> songs = getBestSongs();
+		Song song = songs.stream()
+				.filter(s -> s.getId() == id)
+				.findFirst()
+				.orElse(null);
+		
+		if (song != null) {
+			model.addAttribute("song", song);
+			return "song-detail";
+		} else {
+			model.addAttribute("error", "Canzone non trovata");
+			return "error";
+		}
 	}
 }
