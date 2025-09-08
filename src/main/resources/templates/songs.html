@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Best Songs</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .song-list {
+            list-style: none;
+            padding: 0;
+        }
+        .song-item {
+            background-color: #f8f9fa;
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            border-left: 4px solid #28a745;
+        }
+        .song-id {
+            font-weight: bold;
+            color: #28a745;
+        }
+        .song-title {
+            font-size: 1.1em;
+            margin-left: 10px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .back-link:hover {
+            background-color: #1e7e34;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 Best Songs of the Year</h1>
+        
+        <ul class="song-list">
+            <li class="song-item" th:each="song : ${songs}">
+                <span class="song-id" th:text="${song.id}">ID</span>
+                <span class="song-title" th:text="${song.title}">Titolo Canzone</span>
+            </li>
+        </ul>
+        
+        <a href="/" class="back-link">← Torna alla Home</a>
+    </div>
+</body>
+</html>
